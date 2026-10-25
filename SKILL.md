@@ -1,5 +1,5 @@
 ---
-name: cec-port-ppt
+name: cecport-ppt
 description: 把任意 PPT/Word/PDF/图片等材料重排制作为中电港 CECport 品牌风格的原生可编辑 PPTX（咨询报告信息图风、MiSans、蓝白配色加橙色强调）。当用户要求把 PPT 或其他文件做成中电港风格、中电港汇报/宣传/方案演示美化重排时使用。不适用于与中电港品牌无关的通用美化，也不是只改配色不动版式的机械换肤。
 ---
 
