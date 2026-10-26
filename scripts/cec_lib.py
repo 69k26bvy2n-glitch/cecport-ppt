@@ -280,13 +280,14 @@ def new_page(prs):
     return slide
 
 def header(slide, title, kicker=None):
-    add_rect(slide, ML, 0.46, 0.09, 0.42, fill=ORANGE, shape=MSO_SHAPE.RECTANGLE)
-    add_text(slide, ML + 0.22, 0.38, 9.4, 0.52,
+    """页眉：单根蓝→橙渐变细竖线（0.07×0.72，圆头），纵向贯穿主标题与副标题。
+    2026-10-18 用户定稿；禁止再退回"实心橙竖条+渐变横线"旧方案。"""
+    bar = add_rect(slide, ML + 0.02, 0.40, 0.07, 0.72, radius=0.5)
+    set_gradient(bar, BLUE, ORANGE, angle=90)
+    add_text(slide, ML + 0.26, 0.36, 9.4, 0.52,
              [{"runs": [R(title, 23, True, NAVY)]}], anchor=MSO_ANCHOR.MIDDLE)
-    bar = add_rect(slide, ML + 0.22, 0.98, 0.62, 0.045, radius=0.5)
-    set_gradient(bar, BLUE, ORANGE, angle=0)
     if kicker:
-        add_text(slide, ML + 0.96, 0.86, 8.0, 0.28,
+        add_text(slide, ML + 0.26, 0.885, 9.4, 0.28,
                  [{"runs": [R(kicker, 10.5, False, MUTE)]}],
                  anchor=MSO_ANCHOR.MIDDLE)
     slide.shapes.add_picture(LOGO, Inches(W - MR - 1.92), Inches(0.40),
@@ -307,6 +308,17 @@ def card(slide, x, y, w, h, r=R_CARD):
                   radius=rr(w, h, r))
     card_shadow(sp)
     return sp
+
+def rows_y(y0, y1, n, gap=0.12, min_h=0.68):
+    """在 [y0, y1] 内等分 n 行，返回 [(y, h), ...]。
+    用于卡内纵向列表（KPI/指标/记录行）：先算行高再摆，避免内容压出卡底。
+    行高不足 min_h 时抛错——按 page-patterns §4.5 缩字号/减间距/拆页，不许硬塞。"""
+    h = (y1 - y0 - (n - 1) * gap) / n
+    if h < min_h:
+        raise ValueError(
+            f"行高 {h:.2f}in < {min_h}in（n={n}, 可用高 {y1 - y0:.2f}in）："
+            "缩小字号、把 gap 降到 0.08，或拆页/改两栏")
+    return [(y0 + i * (h + gap), h) for i in range(n)]
 
 def card_title(slide, x, y, w, text, size=13.5, marker=ORANGE, icon=None):
     if icon:

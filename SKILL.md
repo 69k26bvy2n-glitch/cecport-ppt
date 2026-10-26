@@ -46,7 +46,7 @@ cp -R "$SKILL_DIR/assets" "$WORK/"
 ## 组件库速查（scripts/cec_lib.py）
 
 - 页面：`new_deck()` / `new_page(prs)`（含底色与左下浅蓝、右下浅橙装饰弧）/ `header(slide,标题,kicker)` / `footer(slide,页码)`
-- 容器：`card(x,y,w,h)` 白底圆角发丝边轻投影；`card_title(...)` / `icon_title(...,icon名)`
+- 容器：`card(x,y,w,h)` 白底圆角发丝边轻投影；`card_title(...)` / `icon_title(...,icon名)`；`rows_y(y0,y1,n,gap)` 卡内纵向列表行高（装不下直接抛错，按 page-patterns §4.5 处理）
 - 文字：`add_text(slide,x,y,w,h, paras, anchor=)`；段落 dict 支持 `runs / align / line_spacing`；run 用 `R(文本, 字号, 粗体, 颜色)`
 - 形状：`add_rect(..., fill, line, shape=MSO_SHAPE.XXX, radius, shadow)`；`add_line` / `add_line_xy`；`add_icon(slide, 名字, x, y, 尺寸, white=True)`
 - 装饰：`set_gradient(形状, c1, c2, angle)`（只用于蓝→橙装饰细线）；`soft_shadow(...)`；`card_shadow(形状)`（外卡专用轻投影，卡内元素禁用）；`fill_alpha(形状, 百分比)`；`tag(...)` 保税/完税类胶囊；`badge` / `chip` / `icon_chip`
