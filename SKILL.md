@@ -26,7 +26,7 @@ description: 把任意 PPT/Word/PDF/图片等材料重排制作为中电港 CECp
 ## 环境
 
 - python3 + `python-pptx`（1.0.2）+ Pillow；macOS 渲染需 Microsoft PowerPoint；Windows 端用 PowerPoint 或 WPS。
-- 字体 MiSans（客户机未装时随交付附字体文件并提示）。
+- 字体 MiSans（小米免费商用授权）。技能已内置 `assets/fonts/MiSans-Regular.ttf` 与 `MiSans-Bold.ttf`；建稿前先检测本机是否已装（macOS `ls ~/Library/Fonts | grep -i misans`，Windows `dir %LOCALAPPDATA%\Microsoft\Windows\Fonts\*misans*`），缺失则跑 `bash scripts/install-fonts.sh`（macOS）或 `powershell -File scripts/install-fonts.ps1`（Windows），安装后需重启 PowerPoint/WPS。
 - 所有 osascript/PowerPoint 渲染调用在沙箱环境内都需关闭沙箱执行。
 
 ## 工程初始化
@@ -59,7 +59,7 @@ cp -R "$SKILL_DIR/assets" "$WORK/"
 
 1. **接单解析**：拿到输入先全文提取文字与媒体（方法见 workflow-qa）。列清单——总页数、每页事实点、数字、页型初判（封面/过渡/长文/卡片/数据/流程/地图/图文/封底）、烤在图里改不了的位图清单。
 2. **规划页型**：按 page-patterns 对每页选打法；素材缺图标时从 Tabler 补（方法见该文档）。
-3. **建工程写脚本**：可一个 build_all.py 出全本，也可分批 build；同一套 cec_lib 保证全本无色差。
+3. **建工程写脚本**：先确认 MiSans 已装（缺失按「环境」装内置字体）；可一个 build_all.py 出全本，也可分批 build；同一套 cec_lib 保证全本无色差。
 4. **渲染 QA**：`bash scripts/render.sh 成品.pptx qa_out 1600`（macOS）或 `powershell -File scripts/render.ps1 ...`（Windows）。逐页目检，重点查信息分区、溢出、压页脚、修复弹窗（检查方法见 workflow-qa）。
 5. **交付**：成品放用户工作目录，用 `computer://` 链接；附渲染图、烤色位图清单、字体提示；不覆盖原文件；中间产物不堆进交付目录。
 
